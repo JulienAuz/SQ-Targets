@@ -1,0 +1,23 @@
+#impacts-list {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 400px;
+    margin-top: 100px;
+    margin-left: 100px;
+}
+
+#impacts-table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+}
+
+#impacts-table td {
+    text-align: center;
+}
+
+#target-canvas {
+    outline: auto;
+    outline-color: black;
+    position: absolute;
+    margin-left: 600px;
+}
