@@ -8,6 +8,19 @@
   <div id="target-display">
     <canvas id="target-canvas" width="800" height="800"></canvas>
   </div>
+  <div id="score-info">
+    <h2>Score:</h2>
+    <label>
+      Display Mode:
+      <select id="display-mode">
+        <option value="integer">Integer Score</option>
+        <option value="decimal">Decimal Score</option>
+      </select>
+    </label>
+    <br>
+    <label>Total Score:</label>
+    <span id="total-score"></span>
+  </div>
   <div id="impacts-list">
     <h2>Impacts:</h2>
     <table id="impacts-table">
@@ -18,6 +31,7 @@
       </tr>
     </table>
   </div>
+  
   <script src="target.js"></script>
 </body>
 </html>

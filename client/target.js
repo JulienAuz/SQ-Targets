@@ -28,6 +28,7 @@ socket.onmessage = (event) => {
   const impact = JSON.parse(event.data);
   updateImpactsList(impact);
   updateTargetDisplay(impact);
+  updateScoreInfo();
 };
 
 function updateImpactsList(impact) {
@@ -66,17 +67,36 @@ function updateTargetDisplay(impact) {
 
 function calculateIntegerScore(impact) {
   const distanceFromCenter = Math.sqrt(impact.x ** 2 + impact.y ** 2);
-  if (10 - Math.floor(distanceFromCenter) < 0)
-    return 0;
-  return 10 - Math.floor(distanceFromCenter);
+  return Math.max(0, 10 - Math.floor(distanceFromCenter));
 }
 
 function calculateDecimalScore(impact) {
   const distanceFromCenter = Math.sqrt(impact.x ** 2  + impact.y ** 2);
-  if ((10 - distanceFromCenter).toFixed(1) < 0)
-    return 0;
-  return (10 - distanceFromCenter).toFixed(1);
+  return Math.max(0, (10 - distanceFromCenter).toFixed(1));
 }
+
+function updateScoreInfo() {
+  const displayMode = document.getElementById('display-mode').value;
+  const impacts = document.querySelectorAll('#impacts-table tr:not(:first-child)');
+  let totalScore = 0;
+
+  impacts.forEach((impact) => {
+    const integerScore = parseInt(impact.cells[1].textContent, 10);
+    const decimalScore = parseFloat(impact.cells[2].textContent);
+
+    if (displayMode === 'integer') {
+      totalScore += Math.max(0, integerScore);
+    } else {
+      totalScore += Math.max(0, decimalScore);
+    }
+  });
+
+  document.getElementById('total-score').textContent = displayMode === 'integer' ? totalScore.toFixed(0) : totalScore.toFixed(1);
+}
+
+document.getElementById('display-mode').addEventListener('change', () => {
+  updateScoreInfo();
+});
 
 // Clean up the impacts list and target display on WebSocket close
 socket.onclose = () => {
